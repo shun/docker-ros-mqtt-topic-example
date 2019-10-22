@@ -3,6 +3,7 @@ FROM ros:kinetic
 RUN apt update \
     && apt install -y \
         curl \
+        libmosquitto-dev \
         nginx \
         nodejs \
         npm \

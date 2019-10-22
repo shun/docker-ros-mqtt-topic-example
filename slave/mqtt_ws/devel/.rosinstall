@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /root/mqtt_ws/devel/setup.sh

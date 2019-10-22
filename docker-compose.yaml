@@ -14,6 +14,7 @@ services:
       - ./slave/nginx.sites-enabled/rosclient:/etc/nginx/sites-enabled/rosclient
       - ./slave/supervisor.conf.d:/etc/supervisor/conf.d
       - ./slave/rosbridge_server:/usr/local/bin/rosbridge_server
+      - ./slave/mqtt_ws:/root/mqtt_ws
     environment:
       - ROS_MASTER_URI=http://master:11311
     ports:
@@ -23,3 +24,19 @@ services:
       - "29090:9090"
     command: /usr/bin/supervisord -nc /etc/supervisor/supervisord.conf
 
+  cloud:
+    build:
+      context: ./
+      dockerfile: ./cloud/Dockerfile
+    volumes:
+      - ./cloud/app:/app
+      - ./cloud/mosquitto:/mosquitto
+      - ./cloud/supervisor.d:/etc/supervisor.d
+      - ./cloud/nginx.conf.d/mqttclient.conf:/etc/nginx/conf.d/mqttclient.conf
+    ports:
+      - "31883:1883"
+      - "38000:8000"
+      - "38080:8080"
+      - "38081:8081"
+      - "39090:9090"
+    command: /usr/bin/supervisord -nc /etc/supervisord.conf

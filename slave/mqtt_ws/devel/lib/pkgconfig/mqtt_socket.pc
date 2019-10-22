@@ -1,0 +1,8 @@
+prefix=/root/mqtt_ws/devel
+
+Name: mqtt_socket
+Description: Description of mqtt_socket
+Version: 0.0.0
+Cflags: 
+Libs: -L/root/mqtt_ws/devel/lib 
+Requires: 
