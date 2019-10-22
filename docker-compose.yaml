@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  master:
+    image: ros:kinetic
+    command: "roscore"
+
+  slave:
+    build:
+      context: ./
+      dockerfile: ./slave/Dockerfile
+    volumes:
+      - ./slave/app:/app
+      - ./slave/nginx.sites-enabled/rosclient:/etc/nginx/sites-enabled/rosclient
+      - ./slave/supervisor.conf.d:/etc/supervisor/conf.d
+      - ./slave/rosbridge_server:/usr/local/bin/rosbridge_server
+    environment:
+      - ROS_MASTER_URI=http://master:11311
+    ports:
+      - "28000:8000"
+      - "28080:8080"
+      - "28081:8081"
+      - "29090:9090"
+    command: /usr/bin/supervisord -nc /etc/supervisor/supervisord.conf
+

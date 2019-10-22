@@ -1,0 +1,9 @@
+server {
+    listen 8081 default_server;
+
+    location / {
+        root /app/rostopic-example/dist;
+        index index.html;
+    }
+}
+
